@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="css/reset.css">
     <link rel="stylesheet" type="text/css" href="css/iconfont.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" href="./js/bootstrap/css/bootstrap.min.css">
 </head>
 
 <body>
@@ -23,14 +24,69 @@
             <form class="login_form">
                 <i class="iconfont icon-user"></i>
                 <i class="iconfont icon-key"></i>
-                <input type="text" class="input_txt" placeholder="邮箱/手机号">
-                <input type="password" class="input_pass" placeholder="密码">
-                <input type="submit" class="input_sub" value="登 录">
+                <input type="text" class="input_txt" id="myName" placeholder="用户名">
+                <input type="password" class="input_pass" id="myPassword" placeholder="密码">
+                <input type="button" id="loginbtn" class="input_sub" value="登 录">
             </form>
         </div>
 
-    </div> 
+    </div>
+    <!-- 模态框 -->
+
+    <div class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                    <p id="modalinfo">One fine body&hellip;</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
 
 </body>
+<script src="./js/jquery-1.12.4.min.js"></script>
+<script src="./js/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../apiserver/utils/"></script>
+<script>
+    // 添加事件
+    $("#loginbtn").click(function() {
+        var myName = $("#myName").val().trim();
+        var myPassword = $('#myPassword').val().trim();
+        console.log(myName);
+        console.log(myPassword);
+        if (myName === "" || myPassword === "") {
+            $("#modalinfo").text("内容不能为空！")
+            $(".modal").modal('show')
+            return;
+        }
+
+        $.post("http://localhost:8000/admin/login", {
+            user_name: myName,
+            password: myPassword
+        }, function(res) {
+            console.log(res);
+            // 判断成功与否
+            if (res.code === 400) {
+                $('#modalinfo').text(res.msg)
+                $('.modal').modal('show')
+            } else {
+                location.href = "./index.html"
+            }
+        })
+
+
+    })
+</script>
 
 </html>
