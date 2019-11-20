@@ -18,7 +18,7 @@
         <a href="#" class="logo"><img src="images/logo02.png" alt="logo"></a>
         <div class="user_info">
             <img src="images/2.jpg" alt="person" id="loginImg">
-            <span>欢迎&nbsp;&nbsp;<span id="loginName">李思思</span></span>
+            <span>欢迎&nbsp;&nbsp;<i id="loginName" style="font-style: normal;">李思思</i></span>
             <b>管理员</b>
         </div>
         <div class="menu">
@@ -112,14 +112,26 @@
     <script src="./user/user.js"></script>
     <script>
         // 获取用户信息
-        user.gain();
+        user.gain(function(val) {
+            console.log(val);
+
+            if (val.code === 200) {
+                $("#loginName").text(val.data.nickname);
+                $("#loginImg").prop('src', val.data.user_pic);
+            }
+        });
         // 点击退出返回登录页
 
 
         $("#quitBtn").click(function() {
             // console.log(1);
 
-            user.quit();
+            user.quit(function(val) {
+                if (val.code === 200) {
+                    window.location.href = "./login.html";
+
+                }
+            });
         })
     </script>
 </body>

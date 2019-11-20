@@ -31,17 +31,15 @@ var user = {
     },
 
     // 获取用户信息请求
-    gain: function() {
+    // 让gain只负责获取数据，发请求，不负责加工请求
+    // 设callback为回调函数，负责加工请求
+    gain: function(callback) {
         $.get(url + "/admin/getuser", function(res) {
-            console.log(res)
-                // console.log(res.data.user_pic);
-            console.log($("#loginImg"));
+            console.log(res);
+            // console.log(res.data.user_pic);
+            // console.log($("#loginImg"));
+            callback(res);
 
-
-            if (res.code === 200) {
-                $("#loginName").text(res.data.nickname);
-                $("#loginImg").prop('src', res.data.user_pic);
-            }
         })
     }
 }

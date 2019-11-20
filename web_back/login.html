@@ -72,7 +72,14 @@
             return;
         }
         // 需要传参，否则找不到myName, myPassword！
-        user.login(myName, myPassword)
+        user.login(myName, myPassword, function(val) {
+            if (val.code === 400) {
+                $('#modalinfo').text(val.msg)
+                $('.modal').modal('show')
+            } else {
+                window.location.href = "./index.html"
+            }
+        })
 
     })
 </script>
