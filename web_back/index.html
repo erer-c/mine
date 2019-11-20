@@ -17,8 +17,8 @@
     <div class="sider">
         <a href="#" class="logo"><img src="images/logo02.png" alt="logo"></a>
         <div class="user_info">
-            <img src="images/2.jpg" alt="person">
-            <span>欢迎&nbsp;&nbsp;李思思</span>
+            <img src="images/2.jpg" alt="person" id="loginImg">
+            <span>欢迎&nbsp;&nbsp;<span id="loginName">李思思</span></span>
             <b>管理员</b>
         </div>
         <div class="menu">
@@ -111,6 +111,8 @@
     <script src="./js/jquery-1.12.4.min.js"></script>
     <script src="./user/user.js"></script>
     <script>
+        // 获取用户信息
+        user.gain();
         // 点击退出返回登录页
 
 
