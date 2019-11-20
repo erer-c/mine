@@ -109,21 +109,11 @@
 
 
     <script src="./js/jquery-1.12.4.min.js"></script>
+    <script src="./user/user.js"></script>
     <script>
         // 点击退出返回登录页
 
-        var user = {
-            quit: function() {
-                $.post('http://localhost:8000/admin/logout', function(res) {
-                    console.log(1);
 
-                    if (res.code === 200) {
-                        window.location.href = "./login.html";
-
-                    }
-                })
-            }
-        }
         $("#quitBtn").click(function() {
             // console.log(1);
 
