@@ -1,32 +1,25 @@
 // 语义化
-var url = "http://localhost:8000";
+
 var user = {
     // 登录请求
-    login: function(myName, myPassword) {
+    login: function(myName, myPassword, callback) {
+        // console.log(1);
 
-        $.post(url + "/admin/login", {
+        $.post(userurl.userurl_login, {
             user_name: myName,
             password: myPassword
         }, function(res) {
-            console.log(res);
+            console.log(1);
             // 判断成功与否
-            if (res.code === 400) {
-                $('#modalinfo').text(res.msg)
-                $('.modal').modal('show')
-            } else {
-                window.location.href = "./index.html"
-            }
+            callback(res);
         })
     },
     // 退出请求
-    quit: function() {
-        $.post(url + '/admin/logout', function(res) {
-            console.log(1);
+    quit: function(callback) {
+        $.post(userurl.userurl_logout, function(res) {
+            // console.log(1);
+            callback(res);
 
-            if (res.code === 200) {
-                window.location.href = "./login.html";
-
-            }
         })
     },
 
@@ -34,7 +27,7 @@ var user = {
     // 让gain只负责获取数据，发请求，不负责加工请求
     // 设callback为回调函数，负责加工请求
     gain: function(callback) {
-        $.get(url + "/admin/getuser", function(res) {
+        $.get(userurl.userurl_getuser, function(res) {
             console.log(res);
             // console.log(res.data.user_pic);
             // console.log($("#loginImg"));

@@ -59,6 +59,7 @@
 <script src="./js/bootstrap/js/bootstrap.min.js"></script>
 <script src="../../apiserver/utils/"></script>
 <script src="./user/user.js"></script>
+<script src="./user/url.js"></script>
 <script>
     // 添加事件
     $("#loginbtn").click(function() {
@@ -77,7 +78,7 @@
                 $('#modalinfo').text(val.msg)
                 $('.modal').modal('show')
             } else {
-                window.location.href = "./index.html"
+                window.location.href = "./index.html";
             }
         })
 
