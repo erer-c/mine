@@ -9,4 +9,9 @@ var userurl = {
     category_edit: url + "admin/category_edit",
     category_delete: url + "admin/category_delete",
 
+
+    article_search: url + "admin/search",
+    article_add: url + "admin/article_publish",
+    article_delete: url + "admin/article_delete",
+
 }
