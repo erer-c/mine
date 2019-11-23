@@ -129,7 +129,7 @@
                 </div>
                 <div class="modal-footer">
 
-                    <button type="button" class="btn btn-default" id="model_shutoff">关闭</button>
+                    <button type="button" class="btn btn-default" id="model_edit_shutoff">关闭</button>
                     <button type="button" class="btn btn-primary" id="model_save">保存</button>
                 </div>
             </div>
@@ -244,34 +244,31 @@
             $("#cate-edit-slug").val(slug);
 
             $("#model_save").click(function() {
-                    var id = $("#cate-edit-id").val().trim();
-                    var name = $("#cate-edit-name").val().trim();
-                    var slug = $("#cate-edit-slug").val().trim();
-                    if (name === "" || slug === "") {
-                        alert("内容不能为空！")
+                var id = $("#cate-edit-id").val().trim();
+                var name = $("#cate-edit-name").val().trim();
+                var slug = $("#cate-edit-slug").val().trim();
+                if (name === "" || slug === "") {
+                    alert("内容不能为空！")
+                    return;
+                }
+                category.edit(id, name, slug, function(val) {
+                    console.log(val);
+                    // 重新请求数据
+                    gain();
+                    // 隐藏modal框
+                    $("#editModal").modal('hide');
+                    if (val.code === 200) {
+                        alert("修改成功！")
                         return;
                     }
-                    category.edit(id, name, slug, function(val) {
-                        console.log(val);
-                        // 重新请求数据
-                        gain();
-                        // 隐藏modal框
-                        $("#editModal").modal('hide');
-                        if (val.code === 200) {
-                            alert("修改成功！")
-                            return;
-                        }
-                    })
                 })
-                // $("#model_shutoff").on("click", function() {
-                //     console.log(1);
+            });
+            $("#model_edit_shutoff").click(function() {
+                $("#cate-edit-name").val("");
+                $("#cate-edit-slug").val("");
+                $("#editModal").modal("hide");
+            })
 
-            // category.edit(id, name, slug, function(val) {
-            //     $("#editModal").modal('hide');
-
-            // })
-            // return;
-            // })
         })
     </script>
 
