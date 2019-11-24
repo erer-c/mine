@@ -1,11 +1,7 @@
 var article = {
     // 获取数据
-    gain: function(urPage, type, state, callback) {
-        $.get(userurl.article_search, {
-                page: curPage,
-                type: type,
-                state: state
-            },
+    gain: function(callback) {
+        $.get(userurl.article_search,
             function(res) {
                 // console.log(res);
                 callback(res);

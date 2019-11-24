@@ -2,7 +2,7 @@ var category = {
     // 获取并展示数据
     gain: function(callback) {
         $.get(userurl.category_search, function(res) {
-            console.log(res);
+            // console.log(res);
             callback(res)
         })
     },
