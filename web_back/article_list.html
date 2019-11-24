@@ -25,10 +25,10 @@
                         </select>
                         <select id="selStatus" name="" class="form-control input-sm">
                             <option>所有状态</option>
-                            <option value="drafted">草稿</option>
-                            <option value="published">已发布</option>
+                            <option value="草稿">草稿</option>
+                            <option value="已发布">已发布</option>
                         </select>
-                        <button id="btnSearch" class="btn btn-default btn-sm">筛选</button>
+                        <button type="button" id="btnSearch" class="btn btn-default btn-sm">筛选</button>
                     </form>
                 </div>
                 <div class="col-xs-6">
@@ -52,7 +52,7 @@
             </table>
 
             <div class="row text-center">
-                <ul class="pagination pagination-sm">
+                <ul class="pagination pagination-sm" id="pagination">
                     <li class="page-item first disabled"><a href="#" class="page-link">首页</a></li>
                     <li class="page-item prev disabled"><a href="#" class="page-link">上一页</a></li>
                     <li class="page-item active"><a href="#" class="page-link">1</a></li>
@@ -77,6 +77,8 @@
     <script src="./user/url.js"></script>
     <script src="./user/article.js"></script>
     <script src="./js/jquery.twbsPagination.js"></script>
+
+
     <script>
         // 设置左侧菜单
         $('#release_btn').click(function() {
@@ -100,20 +102,100 @@
         {{/each}}
     </script>
 
+
     <script type="text/html" id="cate_temp">
         <option value="">所有分类</option>
         {{each data item}}
-        <option value="{{item.id}}">{{item.id}}</option>
+        <option value="{{item.id}}">{{item.name}}</option>
         {{/each}}
     </script>
 
-    <script>
-        article.gain(function(val) {
-            console.log(val);
-            var tempStr = template("temp_table", val);
-            $("#article_body").html(tempStr);
 
+    <script>
+        // 显示文章分类
+        category.gain(function(val) {
+            console.log(val);
+
+            var tempStr = template("cate_temp", val);
+            $("#selCategory").html(tempStr);
         })
+    </script>
+
+    <script>
+        // 全局变量 
+        var curPage = ''; // 表示当前要展示第几页
+        var type = ''; // 表示文章的类型
+        var state = ''; // 表示文章的状态
+        var curTotalPage = ''; // 表示当前查询总页数
+
+        getAndShow();
+
+        function getAndShow() {
+            // 获取数据并显示
+            article.gain(curPage, type, state, function(val) {
+                // console.log(val);
+                if (val.code === 200) {
+                    var tempStr = template("temp_table", val);
+                    $("#article_body").html(tempStr);
+                }
+
+                // 判断俩次文章次数不同时，先销毁，再创建
+                if (curTotalPage != val.totalPage) {
+                    $('#pagination').twbsPagination('destroy');
+                    curTotalPage = val.totalPage
+                }
+                // 实现分页
+                $('#pagination').twbsPagination({
+                    totalPages: val.totalPage, // 总页数
+                    visiblePages: 9, //分页数
+                    first: '首页',
+                    prev: '上一页',
+                    next: '下一页',
+                    last: '尾页',
+                    onPageClick: function(event, page) {
+                        // 点击页码：
+                        // 1. 更新全局变量
+                        console.log(event, page);
+                        curPage = page; //当前页
+                        // 2. 重新请求
+                        getAndShow()
+                    }
+                })
+
+            })
+        }
+
+
+        // 删除
+        $("#article_body").on("click", ".del", function() {
+            if (window.confirm("确定要删除吗？") === false) {
+                return;
+            }
+
+            // 获取自定义id
+            var id = $(this).attr("data-id");
+            // console.log(id);
+
+            article.delete(id, function(val) {
+                console.log(val);
+                if (val.code === 200) {
+                    getAndShow();
+                }
+            })
+        })
+
+        // 筛选
+        $("#btnSearch").click(function() {
+            type = $("#selCategory").val();
+            state = $("#selStatus").val();
+            console.log(type, state);
+
+            // 筛选完默认显示第一页
+            curPage = 1;
+            getAndShow()
+        })
+
+        // 发表
     </script>
 
 </body>

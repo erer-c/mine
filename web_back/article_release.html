@@ -23,23 +23,26 @@
             写文章
         </div>
         <div class="container-fluid common_con">
-            <form class="form-horizontal article_form">
+            <form class="form-horizontal article_form" id="myform">
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">文章标题：</label>
                     <div class="col-sm-10">
-                        <input type="email" class="form-control" id="inputEmail3" placeholder="文章标题">
+                        <input type="email" class="form-control" name="title" id="inputEmail3" placeholder="文章标题">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputPassword3" class="col-sm-2 control-label">文章封面：</label>
                     <div class="col-sm-10">
-                        <input type="file" id="exampleInputFile">
+                        <input type="file" name="cover" id="coverImg">
+                    </div>
+                    <div>
+                        <img id="previewImg" style="height:200px;" src="https://inews.gtimg.com/newsapp_bt/0/10817911760/1000" alt="">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">文章类别：</label>
                     <div class="col-sm-4">
-                        <select class="form-control" id="cateContainer">
+                        <select class="form-control" name="type" id="cateContainer">
                         </select>
                     </div>
                 </div>
@@ -48,7 +51,7 @@
                     <div class="col-sm-4">
 
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="YYYY-MM-DD" id="dateinput">
+                            <input type="text" class="form-control" name="date" placeholder="YYYY-MM-DD" id="dateinput">
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="button"
                                     onclick="jeDate('#dateinput',{trigger:false,format: 'YYYY-MM-DD'})"><i
@@ -61,13 +64,12 @@
                     <label for="inputEmail3" class="col-sm-2 control-label">文章内容：</label>
                     <div class="col-sm-10">
                         <textarea class="form-control" id="rich_content" name="content" placeholder="文章内容">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda fugiat illo nihil molestias ab. Laborum eius non atque, totam sapiente quae obcaecati assumenda ratione inventore pariatur maiores, qui libero delectus.
                             </textarea>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-success">发布</button>
+                        <button type="button" class="btn btn-success" id="btnPub">发布</button>
                         <button type="submit" class="btn btn-default">存为草稿</button>
                     </div>
                 </div>
@@ -78,8 +80,8 @@
 
     <script src="./user/category.js"></script>
     <script src="./user/url.js"></script>
-    <script src="./js/jquery-1.12.4.min.js"></script>
     <script src="./js/template-web.js"></script>
+    <script src="./user/article.js"></script>
 
 
     <script type="text/html" id="temp-release">
@@ -99,6 +101,46 @@
                 console.log(tempStr);
                 $("#cateContainer").html(tempStr);
             }
+        })
+
+        // 显示图片
+        $("#coverImg").change(function() {
+            console.dir(this);
+            var file = this.files[0];
+            if (file) {
+                // 选中文件
+
+                // 生成一个临时的地址;
+                var url = URL.createObjectURL(file);
+                console.log(url);
+
+                // 把地址给 #previewImg
+                $('#previewImg').prop('src', url)
+            }
+        })
+
+        // 发表文章
+        $("#btnPub").click(function() {
+            var fd = new FormData(document.getElementById("myform"));
+            console.log(fd);
+            console.log(fd.get('title'));
+
+            // 手动添加参数
+            fd.append('state', '已发布');
+
+            // 富文本编辑获取内容
+            fd.set('content', tinyMCE.activeEditor.getContent());
+
+            article.publish(fd, function(val) {
+                // console.log(val);
+                if (val.code === 201) {
+                    alert("添加成功！");
+                } else {
+                    alert(val.msg)
+                }
+
+            })
+
         })
     </script>
 </body>
