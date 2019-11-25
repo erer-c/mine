@@ -23,29 +23,24 @@
             文章编辑
         </div>
         <div class="container-fluid common_con">
-            <form class="form-horizontal article_form">
+            <form class="form-horizontal article_form" id="myform">
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">文章标题：</label>
                     <div class="col-sm-10">
-                        <input type="email" class="form-control" id="inputEmail3" value="文章标题文字">
+                        <input type="email" class="form-control" id="inputEmail" name="title" value="文章标题文字">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputPassword3" class="col-sm-2 control-label">文章封面：</label>
                     <div class="col-sm-10">
                         <img src="images/pic06.jpg" class="article_cover">
-                        <input type="file" id="exampleInputFile">
+                        <input type="file" name="cover" id="exampleInputFile">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">文章类别：</label>
                     <div class="col-sm-4">
-                        <select class="form-control">
-                            <option>类别一</option>
-                            <option>类别二</option>
-                            <option>类别三</option>
-                            <option selected>类别四</option>
-                            <option>类别五</option>
+                        <select class="form-control" id="cateContainer" name="type">
                         </select>
                     </div>
                 </div>
@@ -54,7 +49,7 @@
                     <div class="col-sm-4">
 
                         <div class="input-group">
-                            <input type="text" class="form-control" value="2019-05-17" id="dateinput">
+                            <input type="text" class="form-control" value="2019-05-17" id="dateinput" name="date">
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="button"
                                     onclick="jeDate('#dateinput',{trigger:false,format: 'YYYY-MM-DD'})"><i
@@ -71,12 +66,71 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-success">修改</button>
+                        <button type="button" class="btn btn-success" id="editSave">修改</button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
+
+    <script src="./user/url.js"></script>
+    <script src="./user/article.js"></script>
+    <script src="./js/template-web.js"></script>
+    <script src="./user/category.js"></script>
+
+    <script type="text/html" id="tempEdit">
+        {{each data item}}
+        <option value="{{item.id}}">{{item.name}}</option>
+        {{/each}}
+    </script>
+    <script>
+        // 获取?后id
+        var id = location.search.substr(4);
+        console.log(id);
+
+        article.detail(id, function(val) {
+            console.log(val);
+            // 当前选中类别
+            var nowid = val.data.type;
+            console.log(nowid);
+
+
+            // 显示在表单中
+            $("#inputEmail").val(val.data.title);
+            $("#article_cover").prop('src', val.data.cover);
+            $("#dateinput").val(val.data.date);
+            $("#rich_content").val(val.data.content);
+
+            // 显示文章类别
+            category.gain(function(res) {
+                var tempStr = template("tempEdit", res);
+                console.log(tempStr);
+                $("#cateContainer").html(tempStr);
+                $("#cateContainer").val(nowid);
+            })
+
+        })
+
+        // 点击修改保存
+        $("#editSave").click(function() {
+
+            // 收集参数
+            var fd = new FormData(document.getElementById("myform"));
+            console.log(fd);
+            // 补充一个id参数
+            fd.append("id", id);
+
+            // 富文本
+            fd.set('content', tinyMCE.activeEditor.getContent());
+            article.edit(fd, function(val) {
+                if (val.code === 200) {
+                    alert("修改成功！");
+                } else {
+                    alert(val.msg);
+                }
+            })
+        })
+    </script>
 
 </body>
 

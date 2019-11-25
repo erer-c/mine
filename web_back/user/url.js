@@ -13,5 +13,7 @@ var userurl = {
     article_search: url + "admin/search",
     article_add: url + "admin/article_publish",
     article_delete: url + "admin/article_delete",
+    article_edit: url + "admin/article_edit",
+
 
 }
