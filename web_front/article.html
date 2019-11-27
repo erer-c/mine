@@ -54,19 +54,18 @@
     </div>
 
     <div class="main_con clearfix">
-        <div class="left_con setfr">
+        <div class="left_con setfr" id="cateContent">
             <div class="breadcrumb">
                 当前位置： <a href="#">首页</a> &gt; <a href="#">科技</a> &gt; 文章详情
             </div>
-            <h3 class="article_title">马斯克的新花样？连接人脑和电脑的初创公司又筹了一笔钱</h3>
-            <div class="article_info">杰克 发布于 2019-05-08 07:08:46&nbsp;&nbsp;&nbsp;分类: 奇趣事&nbsp;&nbsp;&nbsp;阅读:
-                (98)&nbsp;&nbsp;&nbsp;评论: (0)</div>
-            <div class="article_con">
+            <h3 class="article_title" id="article_title">马斯克的新花样？连接人脑和电脑的初创公司又筹了一笔钱</h3>
+            <div class="article_info"><span id="article_author"></span> 发布于 <span id="article_date"></span>&nbsp;&nbsp;&nbsp;分类: <span id="article_type"></span>&nbsp;&nbsp;&nbsp;阅读: (98)&nbsp;&nbsp;&nbsp;评论: (0)</div>
+            <div class="article_con" id="article_con">
 
                 <p>“上天入地”还不够？硅谷“钢铁侠”马斯克名下一家低调的公司最近又融了一大笔钱。</p>
 
-                <p>马斯克投资的一家小型且不为人熟知的脑机接口（brain-computer
-                    interface）公司Neuralink披露，该公司融到了3900万美元，虽然不及公司计划的融资额5100万美元，但也比上次的融资多了不少。</p>
+                <p>马斯克投资的一家小型且不为人熟知的脑机接口（brain-computer interface）公司Neuralink披露，该公司融到了3900万美元，虽然不及公司计划的融资额5100万美元，但也比上次的融资多了不少。
+                </p>
 
                 <p>两年前该公司曾计划融资1亿美元，但只拿到了2700万美元的融资。</p>
 
@@ -76,56 +75,34 @@
 
             </div>
             <div class="article_links">
-                上一篇： <a href="#">世界第一台可以玩游戏的冰箱</a><br>
-                下一篇： <a href="#">世界第一个可以玩游戏的马桶、世界上第一个可以玩游戏的茶杯</a>
+                上一篇： <a href="#">世界第一台可以玩游戏的冰箱</a><br> 下一篇： <a href="#">世界第一个可以玩游戏的马桶、世界上第一个可以玩游戏的茶杯</a>
             </div>
 
             <form action="" class="comment_form">
                 <div class="form_group">
                     <label>用户名：</label>
-                    <input type="text" placeholder="请输入用户名" class="comment_name">
+                    <input type="text" placeholder="请输入用户名" class="comment_name" id="comment_name">
                 </div>
                 <div class="form_group">
                     <label>评论内容：</label>
-                    <textarea placeholder="请发表您的评论" class="comment_input"></textarea>
+                    <textarea placeholder="请发表您的评论" class="comment_input" id="comment_input"></textarea>
                 </div>
                 <div class="form_group">
-                    <input type="submit" name="" value="评 论" class="comment_sub"></div>
+                    <input type="button" name="" value="评 论" class="comment_sub" id="comment_Add"></div>
             </form>
 
             <div class="comment_count">
                 4条评论
             </div>
 
-            <div class="comment_list_con">
-                <div class="comment_detail_list">
+            <div class="comment_list_con" id="comment_list_con">
+                <!-- <div class="comment_detail_list">
                     <div class="person_pic fl">乔</div>
                     <div class="name_time fl"><b>虚竹</b><span>4小时前</span></div>
                     <div class="comment_text fl">
                         遏制茅台酒价格过快上涨，多渠道供给，就不一定要买，租茅台酒也可以的，租售同权。开发共有产权茅台酒，让老百姓喝得起茅台酒，饮者有其酒。
                     </div>
-                </div>
-                <div class="comment_detail_list">
-                    <div class="person_pic fl">段</div>
-                    <div class="name_time fl"><b>虚竹</b><span>4小时前</span></div>
-                    <div class="comment_text fl">
-                        遏制茅台酒价格过快上涨，多渠道供给，就不一定要买，租茅台酒也可以的，租售同权。开发共有产权茅台酒，让老百姓喝得起茅台酒，饮者有其酒。
-                    </div>
-                </div>
-                <div class="comment_detail_list">
-                    <div class="person_pic fl">虚</div>
-                    <div class="name_time fl"><b>虚竹</b><span>4小时前</span></div>
-                    <div class="comment_text fl">
-                        遏制茅台酒价格过快上涨，多渠道供给，就不一定要买，租茅台酒也可以的，租售同权。开发共有产权茅台酒，让老百姓喝得起茅台酒，饮者有其酒。
-                    </div>
-                </div>
-                <div class="comment_detail_list">
-                    <div class="person_pic fl">王</div>
-                    <div class="name_time fl"><b>虚竹</b><span>4小时前</span></div>
-                    <div class="comment_text fl">
-                        遏制茅台酒价格过快上涨，多渠道供给，就不一定要买，租茅台酒也可以的，租售同权。开发共有产权茅台酒，让老百姓喝得起茅台酒，饮者有其酒。
-                    </div>
-                </div>
+                </div> -->
             </div>
         </div>
         <div class="right_con setfl">
@@ -205,6 +182,95 @@
         <p>电话：0755-****888 粤ICP备*******8号</p>
     </div>
 
+    <script src="./js/jquery-1.12.4.min.js"></script>
+    <script src="./tool/url.js"></script>
+    <script src="./tool/template-web.js"></script>
+    <script src="./tool/article.js"></script>
+    <script src="./tool/category.js"></script>
+    <script src="./tool/comment.js"></script>
+
+    <script id="comment-temp" type="text/html">
+        {{each data item}}
+        <div class="comment_detail_list">
+            <div class="person_pic fl">{{item.name.substr(0,1)}}</div>
+            <div class="name_time fl"><b>{{item.name}}</b><span>4小时前</span></div>
+            <div class="comment_text fl">
+                {{item.content}}
+            </div>
+        </div>
+        {{/each}}
+    </script>
+
+
+    <script>
+        // 获取进入文章的id
+        var id = location.search.substr(4);
+        console.log(id);
+        // 获取文章详情
+        article.getDetail(id, function(res) {
+            console.log(res);
+
+            // 获取文章类型编号
+            var typeId = res.data.type;
+            console.log(typeId);
+            $("#article_title").html(res.data.title);
+            $("#article_author").html(res.data.author);
+            $("#article_con").html(res.data.content);
+            $("#article_date").html(res.data.date);
+
+            // 通过获取到的编号显示文章类型名
+            // 思路： 
+            //  1. 先取出所有的类型数据
+            //  2. 在其中找出编号与res.data.type相同的那一项，再取出它的名称
+            category.show(function(res) {
+                console.log(res);
+                var re = res.data.find(function(item) {
+                    // console.log(item);
+
+                    if (item.id == typeId) {
+                        return true;
+                    }
+                })
+                console.log(re);
+
+                if (re) {
+                    $("#article_type").html(re.name);
+                }
+
+            })
+        })
+
+
+        // 添加评论
+        $("#comment_Add").click(function() {
+            // 获取内容
+            var comment_name = $("#comment_name").val().trim();
+            var comment_input = $("#comment_input").val().trim();
+            // console.log(comment_input);
+            if (comment_name === "" || comment_input === "") {
+                alert("内容不能为空！")
+            }
+
+
+            // 调接口，添加评论
+            comment.add(comment_name, comment_input, id, function(res) {
+                console.log(res);
+                comGet()
+            })
+
+        })
+
+        // 获取评论
+        function comGet() {
+            comment.get(id, function(result) {
+                // 新添加的评论在前面
+                result.data.reverse();
+                var htmlStr = template("comment-temp", result);
+                $("#comment_list_con").html(htmlStr);
+            })
+        }
+        comGet()
+    </script>
 </body>
 
 </html>

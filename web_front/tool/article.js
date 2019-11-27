@@ -17,7 +17,7 @@ var article = {
                 "id": id
             },
             function(res) {
-                // callback(res)
+                callback(res)
             }
         )
     }
